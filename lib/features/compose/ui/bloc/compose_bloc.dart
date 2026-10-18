@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moviles_auth/features/compose/ui/bloc/compose_event.dart';
 import 'package:moviles_auth/features/compose/ui/bloc/compose_state.dart';
@@ -11,5 +12,7 @@ class ComposeBloc extends Bloc<ComposeEvent, ComposeState> {
   Future<void> _onSubmitted(
     ComposeSubmitted event,
     Emitter<ComposeState> emit,
-  ) async {}
+  ) async {
+    debugPrint('ComposeBloc recibió $event');
+  }
 }

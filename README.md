@@ -18,33 +18,32 @@ flutter run
 - **Registro e inicio de sesión.** Es el Laboratorio 5 resuelto, con Clean Architecture y Bloc (estado único con `copyWith`), en `features/auth`, `features/login` y `features/register`.
 - **Toda la interfaz del muro.** `HomeScreen` hospeda `FeedPage` y `ProfilePage` con un `BottomNavigationBar`; el botón flotante abre `ComposeScreen`. Cada botón ya lanza su evento.
 - **Los estados.** `FeedState` y `ComposeState` ya están modelados, con su `copyWith`.
-- **La consola.** `AppBlocObserver` imprime cada evento y cada estado nuevo de cada Bloc:
+- **Los eventos llegan.** Cada método `on` vacío solo imprime el evento que recibió, así ves en la consola que la interfaz ya está conectada a su Bloc:
 
 ```text
-[FeedBloc] evento → FeedStarted()
-[FeedBloc] evento → FeedLikeToggled(Post(9b1e…, @ana.dev, likes: 0))
-[ComposeBloc] evento → ComposeSubmitted('Hola muro')
+FeedBloc recibió FeedStarted()
+FeedBloc recibió FeedLikeToggled(Post(9b1e…, @ana.dev, likes: 0))
+ComposeBloc recibió ComposeSubmitted('Hola muro')
 ```
 
 ## Qué te toca
 
-Los eventos llegan, pero nadie los atiende: los métodos `on` de `FeedBloc` y `ComposeBloc` están vacíos, y las capas de `features/posts` existen pero no tienen nada adentro ni se conectan entre sí. Tu trabajo es decidir qué va en cada una:
+Los eventos llegan, pero nadie los atiende: los métodos `on` de `FeedBloc` y `ComposeBloc` solo imprimen, y las capas de `features/posts` existen pero no tienen nada adentro ni se conectan entre sí. Tu trabajo es decidir qué va en cada una:
 
 - `posts/domain/repository/post_repository.dart`: el contrato. ¿Qué operaciones necesita el muro?
 - `posts/domain/usecases/`: un caso de uso por acción. Validar el texto de un post le toca a uno de ellos.
 - `posts/data/source/supabase_post_data_source.dart`: el único archivo que usa `_client.from(...)`.
 - `posts/data/repository/post_repository_impl.dart`: cumple el contrato delegando en el data source.
-- `home/ui/bloc/feed_bloc.dart` y `compose/ui/bloc/compose_bloc.dart`: reciben sus casos de uso por constructor y llenan sus `on`.
+- `home/ui/bloc/feed_bloc.dart` y `compose/ui/bloc/compose_bloc.dart`: reciben sus casos de uso por constructor, y en cada `on` reemplazas el `debugPrint` por la lógica que emite estados.
 - `main.dart`: arma la cadena completa en las rutas `/home` y `/compose`.
 
-Mientras trabajas, mira la consola: si un evento aparece y no le sigue ningún estado, su `on` todavía no hace nada.
+Mientras trabajas, mira la consola: si todavía ves `recibió`, ese `on` no hace nada más.
 
 ## Estructura
 
 ```text
 lib/
   main.dart
-  app_bloc_observer.dart
   theme/app_theme.dart
   components/            PrimaryButton y ErrorMessage
   features/
@@ -58,11 +57,11 @@ lib/
       data/source/                     vacío
       data/repository/                 vacío
     home/ui/
-      bloc/              FeedBloc, con sus on vacíos
+      bloc/              FeedBloc, con sus on que solo imprimen
       screens/home_screen.dart
       pages/             FeedPage y ProfilePage
       components/post_card.dart
-    compose/ui/          ComposeScreen y ComposeBloc, con su on vacío
+    compose/ui/          ComposeScreen y ComposeBloc, con su on que solo imprime
 ```
 
 `flutter test` comprueba que la interfaz lanza los eventos correctos.

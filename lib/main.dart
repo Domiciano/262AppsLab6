@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'package:moviles_auth/app_bloc_observer.dart';
 import 'package:moviles_auth/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:moviles_auth/features/auth/data/repository/profile_repository_impl.dart';
 import 'package:moviles_auth/features/auth/data/source/supabase_auth_data_source.dart';
@@ -28,7 +27,6 @@ Future<void> main() async {
     url: 'TU_PROJECT_URL',
     publishableKey: 'TU_PUBLISHABLE_KEY',
   );
-  Bloc.observer = AppBlocObserver();
   runApp(const App());
 }
 
