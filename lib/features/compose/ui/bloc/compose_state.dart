@@ -15,6 +15,7 @@ class ComposeState {
   }
 
   @override
-  String toString() =>
-      'ComposeState(status: ${status.name}, error: $errorMessage)';
+  String toString() {
+    return 'ComposeState(status: ${status.name}, error: $errorMessage)';
+  }
 }

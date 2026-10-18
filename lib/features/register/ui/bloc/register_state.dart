@@ -27,6 +27,7 @@ class RegisterState {
   }
 
   @override
-  String toString() =>
-      'RegisterState(status: ${status.name}, error: $errorMessage)';
+  String toString() {
+    return 'RegisterState(status: ${status.name}, error: $errorMessage)';
+  }
 }

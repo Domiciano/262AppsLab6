@@ -5,5 +5,7 @@ import 'package:moviles_auth/features/auth/domain/repository/auth_repository.dar
 class SignOutUseCase {
   final AuthRepository _auth = AuthRepositoryImpl();
 
-  Future<void> call() => _auth.signOut();
+  Future<void> call() {
+    return _auth.signOut();
+  }
 }

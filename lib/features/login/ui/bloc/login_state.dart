@@ -27,6 +27,7 @@ class LoginState {
   }
 
   @override
-  String toString() =>
-      'LoginState(status: ${status.name}, error: $errorMessage)';
+  String toString() {
+    return 'LoginState(status: ${status.name}, error: $errorMessage)';
+  }
 }

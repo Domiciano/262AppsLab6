@@ -13,7 +13,9 @@ class ComposeScreen extends StatefulWidget {
   const ComposeScreen({super.key});
 
   @override
-  State<ComposeScreen> createState() => _ComposeScreenState();
+  State<ComposeScreen> createState() {
+    return _ComposeScreenState();
+  }
 }
 
 class _ComposeScreenState extends State<ComposeScreen> {

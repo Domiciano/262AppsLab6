@@ -16,5 +16,7 @@ class RegisterSubmitted extends RegisterEvent {
   });
 
   @override
-  String toString() => 'RegisterSubmitted(username: $username, email: $email)';
+  String toString() {
+    return 'RegisterSubmitted(username: $username, email: $email)';
+  }
 }

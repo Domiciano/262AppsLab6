@@ -6,25 +6,33 @@ abstract class FeedEvent {}
 /// Load the profile of the signed in user.
 class ProfileRequested extends FeedEvent {
   @override
-  String toString() => 'ProfileRequested()';
+  String toString() {
+    return 'ProfileRequested()';
+  }
 }
 
 /// The user pressed Cerrar sesión.
 class SignOutRequested extends FeedEvent {
   @override
-  String toString() => 'SignOutRequested()';
+  String toString() {
+    return 'SignOutRequested()';
+  }
 }
 
 /// Load the wall from page 0, and the latest posts of the user.
 class FeedStarted extends FeedEvent {
   @override
-  String toString() => 'FeedStarted()';
+  String toString() {
+    return 'FeedStarted()';
+  }
 }
 
 /// Load the next page of the wall.
 class FeedMoreRequested extends FeedEvent {
   @override
-  String toString() => 'FeedMoreRequested()';
+  String toString() {
+    return 'FeedMoreRequested()';
+  }
 }
 
 /// The user touched the heart of a post.
@@ -34,5 +42,7 @@ class FeedLikeToggled extends FeedEvent {
   FeedLikeToggled(this.post);
 
   @override
-  String toString() => 'FeedLikeToggled($post)';
+  String toString() {
+    return 'FeedLikeToggled($post)';
+  }
 }

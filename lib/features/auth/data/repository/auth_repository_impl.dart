@@ -17,8 +17,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> signOut() => _dataSource.signOut();
+  Future<void> signOut() {
+    return _dataSource.signOut();
+  }
 
   @override
-  AuthUser? currentUser() => _dataSource.currentUser();
+  AuthUser? currentUser() {
+    return _dataSource.currentUser();
+  }
 }

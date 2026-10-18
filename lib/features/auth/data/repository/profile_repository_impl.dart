@@ -12,5 +12,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Profile> getProfile(String id) => _dataSource.getProfile(id);
+  Future<Profile> getProfile(String id) {
+    return _dataSource.getProfile(id);
+  }
 }

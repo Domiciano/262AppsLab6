@@ -8,5 +8,7 @@ class ComposeSubmitted extends ComposeEvent {
   ComposeSubmitted(this.content);
 
   @override
-  String toString() => "ComposeSubmitted('$content')";
+  String toString() {
+    return "ComposeSubmitted('$content')";
+  }
 }

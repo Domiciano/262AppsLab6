@@ -9,5 +9,7 @@ class LoginSubmitted extends LoginEvent {
   LoginSubmitted({required this.email, required this.password});
 
   @override
-  String toString() => 'LoginSubmitted(email: $email)';
+  String toString() {
+    return 'LoginSubmitted(email: $email)';
+  }
 }

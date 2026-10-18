@@ -35,7 +35,9 @@ class SupabaseAuthDataSource {
     }
   }
 
-  Future<void> signOut() => _client.auth.signOut();
+  Future<void> signOut() {
+    return _client.auth.signOut();
+  }
 
   AuthUser? currentUser() {
     final user = _client.auth.currentUser;

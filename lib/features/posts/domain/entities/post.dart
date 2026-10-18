@@ -31,5 +31,7 @@ class Post {
   }
 
   @override
-  String toString() => 'Post($id, @$authorUsername, likes: $likeCount)';
+  String toString() {
+    return 'Post($id, @$authorUsername, likes: $likeCount)';
+  }
 }
