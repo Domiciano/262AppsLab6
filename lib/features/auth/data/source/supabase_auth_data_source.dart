@@ -3,9 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' hide AuthUser;
 
 /// The only file that talks to Supabase Auth.
 class SupabaseAuthDataSource {
-  final SupabaseClient _client;
-
-  SupabaseAuthDataSource(this._client);
+  final SupabaseClient _client = Supabase.instance.client;
 
   Future<AuthUser> signUp({
     required String email,

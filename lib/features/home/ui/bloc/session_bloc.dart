@@ -5,9 +5,9 @@ import 'package:moviles_auth/features/home/ui/bloc/session_state.dart';
 
 /// Closes the session of the signed in user through SignOutUseCase.
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
-  final SignOutUseCase _signOut;
+  final SignOutUseCase _signOut = SignOutUseCase();
 
-  SessionBloc(this._signOut) : super(const SessionState()) {
+  SessionBloc() : super(const SessionState()) {
     on<SignOutRequested>(_onSignOutRequested);
   }
 

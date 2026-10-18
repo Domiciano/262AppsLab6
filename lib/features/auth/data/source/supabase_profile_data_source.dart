@@ -3,9 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// The only file that reads and writes the profiles table.
 class SupabaseProfileDataSource {
-  final SupabaseClient _client;
-
-  SupabaseProfileDataSource(this._client);
+  final SupabaseClient _client = Supabase.instance.client;
 
   Future<void> createProfile(Profile profile) async {
     try {

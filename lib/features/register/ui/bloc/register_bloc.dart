@@ -5,9 +5,9 @@ import 'package:moviles_auth/features/register/ui/bloc/register_state.dart';
 
 /// Turns the sign up form into a call to SignUpUseCase.
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final SignUpUseCase _signUp;
+  final SignUpUseCase _signUp = SignUpUseCase();
 
-  RegisterBloc(this._signUp) : super(const RegisterState()) {
+  RegisterBloc() : super(const RegisterState()) {
     on<RegisterSubmitted>(_onSubmitted);
   }
 

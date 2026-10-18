@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:moviles_auth/features/auth/domain/entities/auth_user.dart';
 import 'package:moviles_auth/features/auth/domain/entities/profile.dart';
-import 'package:moviles_auth/features/auth/domain/repository/auth_repository.dart';
-import 'package:moviles_auth/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:moviles_auth/features/compose/ui/bloc/compose_bloc.dart';
 import 'package:moviles_auth/features/compose/ui/bloc/compose_event.dart';
 import 'package:moviles_auth/features/compose/ui/screens/compose_screen.dart';
@@ -12,23 +9,19 @@ import 'package:moviles_auth/features/home/ui/bloc/feed_bloc.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_event.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_state.dart';
 import 'package:moviles_auth/features/home/ui/bloc/session_bloc.dart';
+import 'package:moviles_auth/features/home/ui/bloc/session_event.dart';
+import 'package:moviles_auth/features/home/ui/bloc/session_state.dart';
 import 'package:moviles_auth/features/home/ui/pages/feed_page.dart';
 import 'package:moviles_auth/features/home/ui/screens/home_screen.dart';
 import 'package:moviles_auth/features/posts/domain/entities/post.dart';
 
-class _FakeAuthRepository implements AuthRepository {
-  bool signedOut = false;
-
-  @override
-  Future<AuthUser> signIn({required String email, required String password}) =>
-      throw UnimplementedError();
-
-  @override
-  Future<AuthUser> signUp({required String email, required String password}) =>
-      throw UnimplementedError();
-
-  @override
-  Future<void> signOut() async => signedOut = true;
+class _FakeSessionBloc extends Bloc<SessionEvent, SessionState>
+    implements SessionBloc {
+  _FakeSessionBloc() : super(const SessionState()) {
+    on<SignOutRequested>(
+      (event, emit) => emit(state.copyWith(status: SessionStatus.signedOut)),
+    );
+  }
 }
 
 class _EventRecorder extends BlocObserver {
@@ -100,14 +93,13 @@ void main() {
   ) async {
     final recorder = _EventRecorder();
     Bloc.observer = recorder;
-    final auth = _FakeAuthRepository();
     await tester.pumpWidget(
       MaterialApp(
         routes: {
           '/': (_) => MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => FeedBloc()),
-              BlocProvider(create: (_) => SessionBloc(SignOutUseCase(auth))),
+              BlocProvider<SessionBloc>(create: (_) => _FakeSessionBloc()),
             ],
             child: const HomeScreen(profile: _profile),
           ),
@@ -126,7 +118,6 @@ void main() {
 
     await tester.tap(find.text('Cerrar sesión'));
     await tester.pumpAndSettle();
-    expect(auth.signedOut, isTrue);
     expect(find.text('login'), findsOneWidget);
   });
 

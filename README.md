@@ -34,8 +34,9 @@ Los eventos llegan, pero nadie los atiende: los métodos `on` de `FeedBloc` y `C
 - `posts/domain/usecases/`: un caso de uso por acción. Validar el texto de un post le toca a uno de ellos.
 - `posts/data/source/supabase_post_data_source.dart`: el único archivo que usa `_client.from(...)`.
 - `posts/data/repository/post_repository_impl.dart`: cumple el contrato delegando en el data source.
-- `home/ui/bloc/feed_bloc.dart` y `compose/ui/bloc/compose_bloc.dart`: reciben sus casos de uso por constructor, y en cada `on` reemplazas el `debugPrint` por la lógica que emite estados.
-- `main.dart`: arma la cadena completa en las rutas `/home` y `/compose`.
+- `home/ui/bloc/feed_bloc.dart` y `compose/ui/bloc/compose_bloc.dart`: crean sus casos de uso como campos, y en cada `on` reemplazas el `debugPrint` por la lógica que emite estados.
+
+Cada capa crea directamente la que necesita, como en `features/auth`: el `Bloc` crea su caso de uso (`final GetFeedUseCase _getFeed = GetFeedUseCase();`), el caso de uso crea el repositorio, el repositorio crea el data source y el data source toma `Supabase.instance.client`. Por eso `main.dart` no cambia: solo crea cada `Bloc`.
 
 Mientras trabajas, mira la consola: si todavía ves `recibió`, ese `on` no hace nada más.
 

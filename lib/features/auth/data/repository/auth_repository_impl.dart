@@ -4,9 +4,7 @@ import 'package:moviles_auth/features/auth/domain/repository/auth_repository.dar
 
 /// Fulfils AuthRepository by delegating on the Supabase data source.
 class AuthRepositoryImpl implements AuthRepository {
-  final SupabaseAuthDataSource _dataSource;
-
-  AuthRepositoryImpl(this._dataSource);
+  final SupabaseAuthDataSource _dataSource = SupabaseAuthDataSource();
 
   @override
   Future<AuthUser> signUp({required String email, required String password}) {

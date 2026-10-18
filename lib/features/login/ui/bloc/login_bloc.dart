@@ -5,9 +5,9 @@ import 'package:moviles_auth/features/login/ui/bloc/login_state.dart';
 
 /// Turns the sign in form into a call to SignInUseCase.
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final SignInUseCase _signIn;
+  final SignInUseCase _signIn = SignInUseCase();
 
-  LoginBloc(this._signIn) : super(const LoginState()) {
+  LoginBloc() : super(const LoginState()) {
     on<LoginSubmitted>(_onSubmitted);
   }
 

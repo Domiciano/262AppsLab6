@@ -2,14 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'package:moviles_auth/features/auth/data/repository/auth_repository_impl.dart';
-import 'package:moviles_auth/features/auth/data/repository/profile_repository_impl.dart';
-import 'package:moviles_auth/features/auth/data/source/supabase_auth_data_source.dart';
-import 'package:moviles_auth/features/auth/data/source/supabase_profile_data_source.dart';
 import 'package:moviles_auth/features/auth/domain/entities/profile.dart';
-import 'package:moviles_auth/features/auth/domain/usecases/sign_in_usecase.dart';
-import 'package:moviles_auth/features/auth/domain/usecases/sign_out_usecase.dart';
-import 'package:moviles_auth/features/auth/domain/usecases/sign_up_usecase.dart';
 import 'package:moviles_auth/features/compose/ui/bloc/compose_bloc.dart';
 import 'package:moviles_auth/features/compose/ui/screens/compose_screen.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_bloc.dart';
@@ -36,12 +29,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final client = Supabase.instance.client;
-    final authRepository = AuthRepositoryImpl(SupabaseAuthDataSource(client));
-    final profileRepository = ProfileRepositoryImpl(
-      SupabaseProfileDataSource(client),
-    );
-
     return MaterialApp(
       title: 'Muro',
       debugShowCheckedModeBanner: false,
@@ -49,13 +36,11 @@ class App extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (_) => BlocProvider(
-          create: (_) =>
-              LoginBloc(SignInUseCase(authRepository, profileRepository)),
+          create: (_) => LoginBloc(),
           child: const LoginScreen(),
         ),
         '/register': (_) => BlocProvider(
-          create: (_) =>
-              RegisterBloc(SignUpUseCase(authRepository, profileRepository)),
+          create: (_) => RegisterBloc(),
           child: const RegisterScreen(),
         ),
         '/home': (context) {
@@ -63,9 +48,7 @@ class App extends StatelessWidget {
           return MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => FeedBloc()),
-              BlocProvider(
-                create: (_) => SessionBloc(SignOutUseCase(authRepository)),
-              ),
+              BlocProvider(create: (_) => SessionBloc()),
             ],
             child: HomeScreen(profile: profile),
           );

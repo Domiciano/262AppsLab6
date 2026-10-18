@@ -4,9 +4,7 @@ import 'package:moviles_auth/features/auth/domain/repository/profile_repository.
 
 /// Fulfils ProfileRepository by delegating on the Supabase data source.
 class ProfileRepositoryImpl implements ProfileRepository {
-  final SupabaseProfileDataSource _dataSource;
-
-  ProfileRepositoryImpl(this._dataSource);
+  final SupabaseProfileDataSource _dataSource = SupabaseProfileDataSource();
 
   @override
   Future<void> createProfile(Profile profile) {
