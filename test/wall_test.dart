@@ -8,18 +8,18 @@ import 'package:moviles_auth/features/compose/ui/screens/compose_screen.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_bloc.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_event.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_state.dart';
-import 'package:moviles_auth/features/home/ui/bloc/session_bloc.dart';
-import 'package:moviles_auth/features/home/ui/bloc/session_event.dart';
-import 'package:moviles_auth/features/home/ui/bloc/session_state.dart';
 import 'package:moviles_auth/features/home/ui/pages/feed_page.dart';
 import 'package:moviles_auth/features/home/ui/screens/home_screen.dart';
 import 'package:moviles_auth/features/posts/domain/entities/post.dart';
 
-class _FakeSessionBloc extends Bloc<SessionEvent, SessionState>
-    implements SessionBloc {
-  _FakeSessionBloc() : super(const SessionState()) {
+class _FakeFeedBloc extends Bloc<FeedEvent, FeedState> implements FeedBloc {
+  _FakeFeedBloc() : super(const FeedState()) {
+    on<ProfileRequested>(
+      (event, emit) => emit(state.copyWith(profile: _profile)),
+    );
+    on<FeedStarted>((event, emit) {});
     on<SignOutRequested>(
-      (event, emit) => emit(state.copyWith(status: SessionStatus.signedOut)),
+      (event, emit) => emit(state.copyWith(signedOut: true)),
     );
   }
 }
@@ -96,19 +96,16 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         routes: {
-          '/': (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (_) => FeedBloc()),
-              BlocProvider<SessionBloc>(create: (_) => _FakeSessionBloc()),
-            ],
-            child: const HomeScreen(profile: _profile),
+          '/': (_) => BlocProvider<FeedBloc>(
+            create: (_) => _FakeFeedBloc(),
+            child: const HomeScreen(),
           ),
           '/login': (_) => const Scaffold(body: Text('login')),
         },
       ),
     );
     await tester.pump();
-    expect(recorder.events.single, isA<FeedStarted>());
+    expect(recorder.events, [isA<ProfileRequested>(), isA<FeedStarted>()]);
     expect(find.text('Todavía no hay posts'), findsOneWidget);
 
     await tester.tap(find.text('Perfil').last);

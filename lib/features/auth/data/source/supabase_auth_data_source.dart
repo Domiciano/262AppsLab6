@@ -37,6 +37,12 @@ class SupabaseAuthDataSource {
 
   Future<void> signOut() => _client.auth.signOut();
 
+  AuthUser? currentUser() {
+    final user = _client.auth.currentUser;
+    if (user == null) return null;
+    return AuthUser(id: user.id, email: user.email ?? '');
+  }
+
   AuthUser _toAuthUser(User? user) {
     if (user == null) throw Exception('Supabase no devolvió el usuario');
     return AuthUser(id: user.id, email: user.email ?? '');

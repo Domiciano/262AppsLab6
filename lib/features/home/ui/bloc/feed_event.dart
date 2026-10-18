@@ -3,6 +3,18 @@ import 'package:moviles_auth/features/posts/domain/entities/post.dart';
 /// Something the home screen asks the FeedBloc to do.
 abstract class FeedEvent {}
 
+/// Load the profile of the signed in user.
+class ProfileRequested extends FeedEvent {
+  @override
+  String toString() => 'ProfileRequested()';
+}
+
+/// The user pressed Cerrar sesión.
+class SignOutRequested extends FeedEvent {
+  @override
+  String toString() => 'SignOutRequested()';
+}
+
 /// Load the wall from page 0, and the latest posts of the user.
 class FeedStarted extends FeedEvent {
   @override

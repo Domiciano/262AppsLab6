@@ -69,11 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: BlocListener<RegisterBloc, RegisterState>(
           listener: (context, state) {
             if (state.status == RegisterStatus.success) {
-              Navigator.pushReplacementNamed(
-                context,
-                '/home',
-                arguments: state.profile,
-              );
+              Navigator.pushReplacementNamed(context, '/home');
             }
           },
           child: BlocBuilder<RegisterBloc, RegisterState>(

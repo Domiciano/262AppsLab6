@@ -49,11 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state.status == LoginStatus.success) {
-              Navigator.pushReplacementNamed(
-                context,
-                '/home',
-                arguments: state.profile,
-              );
+              Navigator.pushReplacementNamed(context, '/home');
             }
           },
           child: BlocBuilder<LoginBloc, LoginState>(

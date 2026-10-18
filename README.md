@@ -15,7 +15,7 @@ flutter run
 
 ## Qué ya funciona
 
-- **Registro e inicio de sesión.** Es el Laboratorio 5 resuelto, con Clean Architecture y Bloc (estado único con `copyWith`), en `features/auth`, `features/login` y `features/register`.
+- **Registro e inicio de sesión.** Es el Laboratorio 5 resuelto, con Clean Architecture y Bloc (estado único con `copyWith`), en `features/auth`, `features/login` y `features/register`. El perfil no viaja entre pantallas: `GetMyProfileUseCase` toma el usuario de la sesión que Supabase guarda en el teléfono y trae su fila de `profiles`.
 - **Toda la interfaz del muro.** `HomeScreen` hospeda `FeedPage` y `ProfilePage` con un `BottomNavigationBar`; el botón flotante abre `ComposeScreen`. Cada botón ya lanza su evento.
 - **Los estados.** `FeedState` y `ComposeState` ya están modelados, con su `copyWith`.
 - **Los eventos llegan.** Cada método `on` vacío solo imprime el evento que recibió, así ves en la consola que la interfaz ya está conectada a su Bloc:
@@ -58,8 +58,8 @@ lib/
       data/source/                     vacío
       data/repository/                 vacío
     home/ui/
-      bloc/              FeedBloc, con sus on que solo imprimen,
-                         y SessionBloc, que ya cierra la sesión
+      bloc/              FeedBloc: cargar el perfil y cerrar sesión ya
+                         funcionan; los on del muro solo imprimen
       screens/home_screen.dart
       pages/             FeedPage y ProfilePage
       components/post_card.dart
