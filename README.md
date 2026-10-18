@@ -57,7 +57,8 @@ lib/
       data/source/                     vacío
       data/repository/                 vacío
     home/ui/
-      bloc/              FeedBloc, con sus on que solo imprimen
+      bloc/              FeedBloc, con sus on que solo imprimen,
+                         y SessionBloc, que ya cierra la sesión
       screens/home_screen.dart
       pages/             FeedPage y ProfilePage
       components/post_card.dart

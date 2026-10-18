@@ -13,7 +13,7 @@ import 'package:moviles_auth/features/auth/domain/usecases/sign_up_usecase.dart'
 import 'package:moviles_auth/features/compose/ui/bloc/compose_bloc.dart';
 import 'package:moviles_auth/features/compose/ui/screens/compose_screen.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_bloc.dart';
-import 'package:moviles_auth/features/home/ui/bloc/feed_event.dart';
+import 'package:moviles_auth/features/home/ui/bloc/session_bloc.dart';
 import 'package:moviles_auth/features/home/ui/screens/home_screen.dart';
 import 'package:moviles_auth/features/login/ui/bloc/login_bloc.dart';
 import 'package:moviles_auth/features/login/ui/screens/login_screen.dart';
@@ -60,12 +60,14 @@ class App extends StatelessWidget {
         ),
         '/home': (context) {
           final profile = ModalRoute.of(context)!.settings.arguments as Profile;
-          return BlocProvider(
-            create: (_) => FeedBloc()..add(FeedStarted()),
-            child: HomeScreen(
-              profile: profile,
-              signOut: SignOutUseCase(authRepository),
-            ),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => FeedBloc()),
+              BlocProvider(
+                create: (_) => SessionBloc(SignOutUseCase(authRepository)),
+              ),
+            ],
+            child: HomeScreen(profile: profile),
           );
         },
         '/compose': (_) => BlocProvider(

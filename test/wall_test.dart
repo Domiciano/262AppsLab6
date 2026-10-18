@@ -11,6 +11,7 @@ import 'package:moviles_auth/features/compose/ui/screens/compose_screen.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_bloc.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_event.dart';
 import 'package:moviles_auth/features/home/ui/bloc/feed_state.dart';
+import 'package:moviles_auth/features/home/ui/bloc/session_bloc.dart';
 import 'package:moviles_auth/features/home/ui/pages/feed_page.dart';
 import 'package:moviles_auth/features/home/ui/screens/home_screen.dart';
 import 'package:moviles_auth/features/posts/domain/entities/post.dart';
@@ -103,9 +104,12 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         routes: {
-          '/': (_) => BlocProvider(
-            create: (_) => FeedBloc()..add(FeedStarted()),
-            child: HomeScreen(profile: _profile, signOut: SignOutUseCase(auth)),
+          '/': (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => FeedBloc()),
+              BlocProvider(create: (_) => SessionBloc(SignOutUseCase(auth))),
+            ],
+            child: const HomeScreen(profile: _profile),
           ),
           '/login': (_) => const Scaffold(body: Text('login')),
         },
