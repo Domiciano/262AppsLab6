@@ -20,6 +20,7 @@ class SignUpUseCase {
       id: user.id,
       username: username,
       fullName: fullName,
+      email: email,
     );
     await _profiles.createProfile(profile);
     return profile;

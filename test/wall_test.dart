@@ -44,7 +44,12 @@ Post _post(String id, {int likes = 0, bool mine = false}) => Post(
   likedByMe: mine,
 );
 
-const _profile = Profile(id: 'u1', username: 'ana.dev', fullName: 'Ana Gómez');
+const _profile = Profile(
+  id: 'u1',
+  username: 'ana.dev',
+  fullName: 'Ana Gómez',
+  email: 'ana@icesi.edu.co',
+);
 
 void main() {
   test('Post.copyWith only changes the likes', () {

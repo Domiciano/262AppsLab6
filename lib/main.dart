@@ -15,8 +15,8 @@ import 'package:moviles_auth/theme/app_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
-    url: 'TU_PROJECT_URL',
-    publishableKey: 'TU_PUBLISHABLE_KEY',
+    url: 'https://pmijmrkaucdwadmnnvbo.supabase.co',
+    publishableKey: 'sb_publishable_8tS9o_mjkvKA4z9WUvRjCg_01oNcv6y',
   );
   runApp(const App());
 }

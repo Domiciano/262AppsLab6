@@ -11,6 +11,7 @@ class SupabaseProfileDataSource {
         'id': profile.id,
         'username': profile.username,
         'full_name': profile.fullName,
+        'email': profile.email,
       });
     } on PostgrestException catch (e) {
       throw Exception(e.message);
@@ -24,6 +25,7 @@ class SupabaseProfileDataSource {
         id: row['id'] as String,
         username: row['username'] as String,
         fullName: row['full_name'] as String,
+        email: row['email'] as String,
       );
     } on PostgrestException catch (e) {
       throw Exception(e.message);
