@@ -1,11 +1,11 @@
-import 'package:moviles_auth/features/auth/domain/entities/auth_user.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide AuthUser;
+import 'package:moviles_auth/features/auth/domain/entities/app_user.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// The only file that talks to Supabase Auth.
 class SupabaseAuthDataSource {
   final SupabaseClient _client = Supabase.instance.client;
 
-  Future<AuthUser> signUp({
+  Future<AppUser> signUp({
     required String email,
     required String password,
   }) async {
@@ -14,13 +14,13 @@ class SupabaseAuthDataSource {
         email: email,
         password: password,
       );
-      return _toAuthUser(response.user);
+      return _toAppUser(response.user);
     } on AuthException catch (e) {
       throw Exception(e.message);
     }
   }
 
-  Future<AuthUser> signIn({
+  Future<AppUser> signIn({
     required String email,
     required String password,
   }) async {
@@ -29,7 +29,7 @@ class SupabaseAuthDataSource {
         email: email,
         password: password,
       );
-      return _toAuthUser(response.user);
+      return _toAppUser(response.user);
     } on AuthException catch (e) {
       throw Exception(e.message);
     }
@@ -39,14 +39,14 @@ class SupabaseAuthDataSource {
     return _client.auth.signOut();
   }
 
-  AuthUser? currentUser() {
+  AppUser? currentUser() {
     final user = _client.auth.currentUser;
     if (user == null) return null;
-    return AuthUser(id: user.id, email: user.email ?? '');
+    return AppUser(id: user.id, email: user.email ?? '');
   }
 
-  AuthUser _toAuthUser(User? user) {
+  AppUser _toAppUser(User? user) {
     if (user == null) throw Exception('Supabase no devolvió el usuario');
-    return AuthUser(id: user.id, email: user.email ?? '');
+    return AppUser(id: user.id, email: user.email ?? '');
   }
 }
