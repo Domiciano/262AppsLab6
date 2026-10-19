@@ -5,7 +5,7 @@ Punto de partida del **Laboratorio 6**: un muro al estilo de Twitter sobre Supab
 ## Cómo correrlo
 
 1. Pon la `Project URL` y la `publishable key` de **tu** proyecto de Supabase en `lib/main.dart`.
-2. Crea las tablas `posts` y `likes`, como dicen *Escribir en la base de datos* y el laboratorio. Lo más fácil es copiar aquí la carpeta `supabase/` de tu proyecto del Laboratorio 5, que ya trae tu `link` y tu migración de `profiles`, y agregar las dos migraciones nuevas.
+2. Copia aquí la carpeta `supabase/` de tu proyecto del Laboratorio 5, que trae tu `link` y la tabla `profiles`. Agrega las migraciones de `posts` y `likes`, en ese orden, como dice el laboratorio.
 3. Corre la app:
 
 ```bash
